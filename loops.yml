@@ -1,0 +1,13 @@
+---
+- hosts: 172.31.41.130
+  become: true
+  tasks:
+    - name: install packages
+      yum:
+        name: "{{item}}"
+        state: present
+      loop:
+        - git
+        - docker
+        - httpd
+...          

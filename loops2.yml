@@ -1,0 +1,17 @@
+---
+- hosts: 172.31.41.130
+  become: true
+  tasks:
+    - name: Create Javahome group
+      group:
+        name: Javahome
+        state: present
+    - name: Create Users
+      user:
+        name: "{{item.name}}"
+        group: "{{item.group}}"
+      loop:
+        - {name: "HARI", group: "Javahome"}
+        - {name: "Kiran", group: "Javahome"}
+...         
+

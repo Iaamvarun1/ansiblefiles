@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+    - name: task-2
+      debug:
+        msg: this is task2
+    - name: import task
+      import_tasks: 
+        task1.yml      

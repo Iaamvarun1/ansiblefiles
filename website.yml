@@ -1,0 +1,26 @@
+---
+- hosts: 172.31.40.75
+  become: True
+  tasks:
+    - name: Install apache
+      yum:
+        name: httpd
+        state: present
+    - name: Install git
+      yum:
+        name: git
+        state: present
+    - name: get static code from git
+      git:
+        repo: https://github.com/javahometech/javahome-app
+        dest: /var/www/html
+    - name: restart apache
+      service:
+        name: httpd
+        state: restarted
+    - name: start and enable apache
+      service:
+        name: httpd
+        state: started
+        enabled: True      
+                  

@@ -1,0 +1,16 @@
+---
+- hosts: 172.31.41.130
+  become: True
+  gather_facts: yes
+  tasks:
+    - name: install packages
+      yum:
+         name: "{{item.name}}"
+         state: "{{item.state}}"
+      loop: 
+         - {name: "git", state: "present"}
+         - {name: "docker", state: "present"}
+         - {name: "httpd", state: "present"} 
+      when:  ansible_os_family == "RedHat"      
+... 
+
