@@ -1,0 +1,32 @@
+---
+- hosts: 172.31.33.216
+  become: True
+  tasks:
+    - name: Download nginx Rpm
+      yum: name=http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm 
+    - name: Install Nginx
+      yum:
+        name: nginx
+        state: present
+        enablerepo: nginx
+    - name: Install git
+      yum:
+        name: git
+        state: present
+    - name: Remove folders
+      command: chdir=/usr/share/
+             rm -rf nginx
+    - name: get static code from git
+      git:
+        repo: https://github.com/iaamvarun/javahomeapp  
+        dest: /usr/share/nginx/html      
+    - name: Start and enable Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+  handlers:
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted        
