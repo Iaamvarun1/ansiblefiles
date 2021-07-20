@@ -1,0 +1,34 @@
+---
+- hosts: 172.31.41.130
+  become: True
+  tasks:
+    - name: Install py
+      yum:
+        name: python-pip
+        state: present
+    - name: install docker py
+      pip:
+        name: docker-py
+        state: present
+    - name: install docker
+      yum:
+        name: docker
+        state: present
+    - name: start and enable docker
+      service:
+        name: docker
+        state: started
+        enabled: True
+    - name: Docker prune
+      docker_container:
+        name: nodeapp
+        state: absent
+               
+    - name: start docker container
+      docker_container:
+        name: nodeapp1
+        image: "gollapalli/webapp:e56caec8fa2a96ba30489e84caca4ea942d55edc"
+        state: started 
+        published_ports:
+          - 8080:8080        
+
