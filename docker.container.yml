@@ -19,16 +19,15 @@
         name: docker
         state: started
         enabled: True
-    - name: Docker prune
-      docker_container:
-        name: nodeapp
-        state: absent
-               
-    - name: start docker container
+    - name: Delete old container
       docker_container:
         name: nodeapp1
-        image: "gollapalli/webapp:e56caec8fa2a96ba30489e84caca4ea942d55edc"
-        state: started 
-        published_ports:
-          - 8080:8080        
-
+        state: absent
+    - name: Delete old images
+      docker_image:
+        name: gollapalli/webapp:e56caec8fa2a96ba30489e84caca4ea942d55edc        
+        state: absent              
+    - name: start docker container
+      docker_container:
+        name: nodeapp
+        image: gollapalli/webapp:e56caec8fa2a96ba30489e84caca4ea942d55edc         
